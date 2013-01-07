@@ -3,9 +3,7 @@ package com.agly.physics.controller;
 import com.agly.physics.model.Ball;
 import com.agly.physics.model.Click;
 import com.agly.physics.model.Desk;
-import com.agly.physics.view.obj.Ball2D;
-import com.agly.physics.view.obj.Click2D;
-import com.agly.physics.view.obj.Magnet2D;
+import com.agly.physics.model.Magnet;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,9 +17,6 @@ public class DeskController {
 
 	Desk desk;
 
-	private Click2D click2d;
-	private Ball2D ball2d;
-
 	private Ball ball;
 	private Click click;
 
@@ -31,18 +26,15 @@ public class DeskController {
 		
 		DeskController.stage = stage;
 
-		this.ball2d = new Ball2D();
-		this.click2d = new Click2D();
-		
-		ball = ball2d.getBall();
-		click = click2d.getClick();
+		this.ball = new Ball();
+		this.click = new Click();
 
 		// center the ball horizontally
-		ball2d.setPosition((stage.getWidth() / 2 - ball2d.getWidth() / 2),
-				ball2d.getHeight());
+		ball.setPosition((stage.getWidth() / 2 - ball.getWidth() / 2),
+				ball.getHeight());
 
 		// add the ball to the stage
-		stage.addActor(ball2d);
+		stage.addActor(ball);
 		
 		stage.addListener(new ClickListener() {
 			@Override
@@ -50,10 +42,10 @@ public class DeskController {
 					int pointer, int button) {
 
 				if (click.state == Click.State.PASSIVE) {
-					stage.addActor(click2d);
+					stage.addActor(click);
 					click.state = Click.State.ACTIVE;
 				}
-				click2d.setPosition(x, y);
+				click.setPosition(x, y);
 			}
 
 			@Override
@@ -63,13 +55,13 @@ public class DeskController {
 			}
 		});
 
-		Magnet2D magnet2d = new Magnet2D(ball);
-		magnet2d.setPosition(300, 200);
-		stage.addActor(magnet2d);
+		Magnet magnet = new Magnet(ball);
+		magnet.setPosition(300, 200);
+		stage.addActor(magnet);
 		
-		Magnet2D magnet2d2 = new Magnet2D(ball);
-		magnet2d2.setPosition(80, 200);
-		stage.addActor(magnet2d2);
+		Magnet magnet2 = new Magnet(ball);
+		magnet2.setPosition(85, 200);
+		stage.addActor(magnet2);
 		
 		
 	}
@@ -108,7 +100,7 @@ public class DeskController {
 					"Reached position " + click.getPosition());
 			click.state = Click.State.PASSIVE;
 
-			stage.getActors().removeValue(click2d, true);
+			stage.getActors().removeValue(click, true);
 			return;
 		}
 
@@ -137,7 +129,6 @@ public class DeskController {
 
 		//Ball ball = ball2d.getBall();
 		//Click click = click2d.getClick();
-
 	}
 
 }
