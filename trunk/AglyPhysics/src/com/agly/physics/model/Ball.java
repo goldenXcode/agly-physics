@@ -1,5 +1,10 @@
 package com.agly.physics.model;
 
+import com.agly.physics.controller.DeskController;
+import com.agly.physics.view.RenderHelper;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,9 +13,14 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public class Ball {
+public class Ball extends Actor {
 
+    // constant useful for logging
+    public static final String LOG = Ball.class.getSimpleName();
+    
 	/**
 	 * The ball's size
 	 */
@@ -24,6 +34,17 @@ public class Ball {
 	private Body body;
 
 	public Ball() {
+
+		createBody();
+
+		super.setTouchable(Touchable.disabled);
+		
+		//setting visual objects width and height
+		this.setWidth(Ball.SIZE);
+		this.setHeight(Ball.SIZE);
+	}
+
+	private void createBody() {
 		// First we create a body definition
 		BodyDef bodyDef = new BodyDef();
 		// We set our body to dynamic, for something like ground which doesnt
@@ -31,8 +52,6 @@ public class Ball {
 		bodyDef.type = BodyType.DynamicBody;
 		// Set our body's starting position in the world
 		bodyDef.position.set(100, 100);
-		
-		
 
 		// Create our body in the world using our body definition
 		body = Desk.world.createBody(bodyDef);
@@ -50,29 +69,57 @@ public class Ball {
 
 		// Create our fixture and attach it to the body
 		Fixture fixture = body.createFixture(fixtureDef);
-
+		
 		// Remember to dispose of any shapes after you're done with them!
 		// BodyDef and FixtureDef don't need disposing, but shapes do.
 		circle.dispose();
 		
-		MassData massData = new MassData();
-		massData.mass = 1;
-		
-		
-		body.setMassData(massData);
-		//body.resetMassData();
-		
-		System.out.println(body.getMass());
+		//setting mass
+        MassData massData = new MassData();
+        massData.mass = 1;
+        body.setMassData(massData);
 	}
 	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		//moving the image to position
+		this.setX(this.getPosition().x);
+		this.setY(this.getPosition().y);
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+
+		RenderHelper.shapeRenderer.begin(ShapeType.FilledCircle);
+
+		RenderHelper.shapeRenderer.setColor(new Color(1, 0, 0, 1));
+		RenderHelper.shapeRenderer
+				.filledCircle(getX(), getY(), Ball.SIZE);
+		RenderHelper.shapeRenderer.end();
+		
+		
+		if (RenderHelper.isDebug() == true) {
+		RenderHelper.box2dRenderer.render(
+				Desk.world, DeskController.stage.getCamera().combined);
+		}
+	}
+
+
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
 	
-	public void setPosition(Vector2 v) {
-		body.setTransform(v, body.getAngle());
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		x = Math.round(x);
+		y = Math.round(y);
+		body.setTransform(new Vector2(x, y),
+				body.getAngle());
 	}
-	
+
 	public void setVelocity(Vector2 v) {
 		body.setLinearVelocity(v);
 	}

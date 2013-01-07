@@ -9,7 +9,7 @@ public class RenderHelper {
 	
 	public static Box2DDebugRenderer box2dRenderer = new Box2DDebugRenderer();
 	
-	private static boolean debug = false;
+	private static boolean debug = true;
 
 	public static boolean isDebug() {
 		return debug;
