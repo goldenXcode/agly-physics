@@ -30,13 +30,14 @@ public class DeskController {
 		this.click = new Click();
 
 		// center the ball horizontally
-		ball.setPosition((stage.getWidth() / 2 - ball.getWidth() / 2),
-				ball.getHeight());
-
+		//ball.setPosition((stage.getWidth() / 2 - ball.getWidth() / 2),
+		//		ball.getHeight());
+		
 		// add the ball to the stage
 		stage.addActor(ball);
-		
+		/*
 		stage.addListener(new ClickListener() {
+			
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -45,6 +46,7 @@ public class DeskController {
 					stage.addActor(click);
 					click.state = Click.State.ACTIVE;
 				}
+				
 				click.setPosition(x, y);
 			}
 
@@ -54,21 +56,20 @@ public class DeskController {
 				return true;
 			}
 		});
+		*/
 
 		Magnet magnet = new Magnet(ball);
 		magnet.setPosition(300, 200);
 		stage.addActor(magnet);
 		
 		Magnet magnet2 = new Magnet(ball);
-		magnet2.setPosition(85, 200);
+		magnet2.setPosition(100, 200);
 		stage.addActor(magnet2);
-		
 		
 	}
 
 	public void update(float delta) {
 		clickCollision();
-		//targetColision();
 		Desk.world.step(1 / 60f, 6, 2);
 	}
 
@@ -76,17 +77,6 @@ public class DeskController {
 
 		if (click.state == Click.State.PASSIVE)
 			return;
-		
-		/*
-		Gdx.app.log( LOG, "Click no round " + click.getPosition()); 
-		Gdx.app.log( LOG, "Ball no round " + ball.getPosition()); 
-		Gdx.app.log( LOG, "Click round " +
-				new Vector2(Math.round(click.getPosition().x),
-						(Math.round(click.getPosition().y)))); 
-		Gdx.app.log( LOG, "Ball round " +
-				new Vector2(Math.round(ball.getPosition().x),
-						(Math.round(ball.getPosition().y)))); 
-		*/
 		
 		if (Math.round(click.getPosition().x) == Math
 				.round(ball.getPosition().x)
