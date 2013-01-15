@@ -39,6 +39,7 @@ public abstract class AbstractScreen
         int width = ( isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH );
         int height = ( isGameScreen() ? GAME_VIEWPORT_HEIGHT : MENU_VIEWPORT_HEIGHT );
         this.stage = new Stage( width, height, true );
+        Gdx.input.setInputProcessor(stage);
     }
 
     protected String getName()

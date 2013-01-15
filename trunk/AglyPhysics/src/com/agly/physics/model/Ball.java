@@ -50,15 +50,13 @@ public class Ball extends Actor {
 		// We set our body to dynamic, for something like ground which doesnt
 		// move we would set it to StaticBody
 		bodyDef.type = BodyType.DynamicBody;
-		// Set our body's starting position in the world
-		bodyDef.position.set(100, 100);
 
 		// Create our body in the world using our body definition
 		body = Desk.world.createBody(bodyDef);
 
 		// Create a circle shape and set its radius to 6
 		CircleShape circle = new CircleShape();
-		circle.setRadius(6f);
+		circle.setRadius(Ball.SIZE);
 
 		// Create a fixture definition to apply our shape to
 		FixtureDef fixtureDef = new FixtureDef();
@@ -78,6 +76,14 @@ public class Ball extends Actor {
         MassData massData = new MassData();
         massData.mass = 1;
         body.setMassData(massData);
+        
+        //like a friction
+        body.setLinearDamping(0.5f);
+        //set angular damping?
+        
+        this.setPosition(Ball.SIZE, Ball.SIZE);
+        
+        
 	}
 	
 	@Override
@@ -91,7 +97,7 @@ public class Ball extends Actor {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-
+		
 		RenderHelper.shapeRenderer.begin(ShapeType.FilledCircle);
 
 		RenderHelper.shapeRenderer.setColor(new Color(1, 0, 0, 1));
@@ -113,9 +119,9 @@ public class Ball extends Actor {
 	
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x, y);
 		x = Math.round(x);
 		y = Math.round(y);
+		super.setPosition(x, y);
 		body.setTransform(new Vector2(x, y),
 				body.getAngle());
 	}
@@ -127,5 +133,4 @@ public class Ball extends Actor {
 	public Body getBody() {
 		return body;
 	}
-
 }
