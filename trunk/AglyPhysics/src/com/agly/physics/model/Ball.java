@@ -2,7 +2,10 @@ package com.agly.physics.model;
 
 import com.agly.physics.controller.DeskController;
 import com.agly.physics.view.RenderHelper;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +35,9 @@ public class Ball extends Actor {
 	public static final float SPEED = 50f;
 
 	private Body body;
-
+	
+	Texture pixmaptex;
+	
 	public Ball() {
 
 		createBody();
@@ -40,8 +45,10 @@ public class Ball extends Actor {
 		super.setTouchable(Touchable.disabled);
 		
 		//setting visual objects width and height
-		this.setWidth(Ball.SIZE);
-		this.setHeight(Ball.SIZE);
+		this.setWidth(32);
+		this.setHeight(32);
+		
+
 	}
 
 	private void createBody() {
@@ -97,19 +104,15 @@ public class Ball extends Actor {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		
+				
 		RenderHelper.shapeRenderer.begin(ShapeType.FilledCircle);
-
-		RenderHelper.shapeRenderer.setColor(new Color(1, 0, 0, 1));
+		
+		RenderHelper.shapeRenderer.identity();
+		RenderHelper.shapeRenderer.setColor(Color.RED);
 		RenderHelper.shapeRenderer
 				.filledCircle(getX(), getY(), Ball.SIZE);
 		RenderHelper.shapeRenderer.end();
-		
-		
-		if (RenderHelper.isDebug() == true) {
-		RenderHelper.box2dRenderer.render(
-				Desk.world, DeskController.stage.getCamera().combined);
-		}
+
 	}
 
 
