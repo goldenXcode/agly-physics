@@ -42,16 +42,15 @@ public class Magnet extends Actor {
 		position = new Vector2();
 
 		super.setTouchable(Touchable.enabled);
-		this.setWidth(Magnet.SIZE);
-		this.setHeight(Magnet.SIZE);
-		
+		this.setWidth(Magnet.SIZE * 2);
+		this.setHeight(Magnet.SIZE * 2);
+
 		if (state == State.ACTIVE) 
 			this.color = Color.BLUE;
 		else
 			this.color = Color.GRAY;
 		
 		this.addListener(new ClickListener() {
-	
 
 			@Override
 				public void touchUp(InputEvent event, float x, float y,
@@ -104,15 +103,13 @@ public class Magnet extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 
 		RenderHelper.shapeRenderer.begin(ShapeType.FilledCircle);
-
+		
+		RenderHelper.shapeRenderer.identity();
 		RenderHelper.shapeRenderer.setColor(color);
-		RenderHelper.shapeRenderer.filledCircle(getX(), getY(), Magnet.SIZE);
+		RenderHelper.shapeRenderer.filledCircle(getX() + Magnet.SIZE, getY() + Magnet.SIZE, Magnet.SIZE);
+
 		RenderHelper.shapeRenderer.end();
 
-		if (RenderHelper.isDebug() == true) {
-			RenderHelper.box2dRenderer.render(Desk.world,
-					DeskController.stage.getCamera().combined);
-		}
 	}
 
 	public Vector2 getPosition() {
@@ -125,9 +122,10 @@ public class Magnet extends Actor {
 
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x, y);
+		super.setPosition(x - SIZE , y - SIZE);
 		x = Math.round(x);
 		y = Math.round(y);
+		//position = new Vector2(x + Magnet.SIZE, y + Magnet.SIZE);
 		position = new Vector2(x, y);
 	}
 
