@@ -116,17 +116,12 @@ public class Magnet extends Actor {
 		return position;
 	}
 
-	public void setPosition(Vector2 position) {
-		this.position = position;
-	}
-
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x - SIZE , y - SIZE);
 		x = Math.round(x);
 		y = Math.round(y);
-		//position = new Vector2(x + Magnet.SIZE, y + Magnet.SIZE);
-		position = new Vector2(x, y);
+		super.setPosition(x - SIZE , y - SIZE);
+		position.set(x, y);
 	}
 
 }

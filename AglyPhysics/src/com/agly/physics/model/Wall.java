@@ -99,8 +99,7 @@ public class Wall extends Actor {
 		body.setTransform(body.getPosition(), (float) angle * MathUtils.degreesToRadians);
 
 		
-		//this.setX(body.getPosition().x);
-		//this.setY(body.getPosition().y);
+		body.setUserData(Wall.class.getSimpleName());
 	}
 
 	@Override

@@ -39,16 +39,14 @@ public class Ball extends Actor {
 	Texture pixmaptex;
 	
 	public Ball() {
-
-		createBody();
-
+		
 		super.setTouchable(Touchable.disabled);
 		
 		//setting visual objects width and height
-		this.setWidth(32);
-		this.setHeight(32);
+		this.setWidth(SIZE);
+		this.setHeight(SIZE);
 		
-
+		createBody();
 	}
 
 	private void createBody() {
@@ -89,6 +87,8 @@ public class Ball extends Actor {
         //set angular damping?
         
         this.setPosition(Ball.SIZE, Ball.SIZE);
+        
+        body.setUserData(Ball.class.getSimpleName());
         
         
 	}
