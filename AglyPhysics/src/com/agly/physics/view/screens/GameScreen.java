@@ -13,7 +13,6 @@ public class GameScreen extends AbstractScreen {
 
 	public GameScreen(AglyPhysics game) {
 		super(game);
-
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class GameScreen extends AbstractScreen {
 		getBatch().end();
 		
 		
-		if (seconds > 10) {
+		if (seconds > 5) {
 			this.gameOver();
 		}
 	}
@@ -60,12 +59,9 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	public void gameOver() {
-		this.controller.gameOver();
-		
-        this.stage.clear();
-       // Desk.cleanWorld();
-        controller = new DeskController(this);
-        seconds = 0;
+		controller.gameOver();
+		game.setScreen(new HighScoresScreen(game, controller.getScore()));
+
 	}
 	
 	public Stage getStage() {
