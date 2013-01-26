@@ -47,9 +47,8 @@ public class DeskController {
 		float width = stage.getCamera().viewportWidth;
 		float height = stage.getCamera().viewportHeight;
 		
-		int wallWidth = 5;
-		ball.setPosition(random.nextInt((int)width - wallWidth) + wallWidth,
-				random.nextInt((int)height - wallWidth) + wallWidth);
+		ball.setPosition(random.nextInt((int)(width - Ball.SIZE)) + Ball.SIZE,
+				random.nextInt((int)(height - Ball.SIZE)) + Ball.SIZE);
 		
 		float indent = 70;
 		Magnet magnet = new Magnet(ball);
@@ -142,6 +141,9 @@ public class DeskController {
 	}
 	
 	public void gameOver() {
+		Desk.cleanWorld(); 
+		DeskController.stage.clear();
+		
 		
 	}
 
