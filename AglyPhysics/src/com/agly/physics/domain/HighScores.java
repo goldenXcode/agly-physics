@@ -52,10 +52,8 @@ public class HighScores implements Serializable {
 		
 		for (int i = highScores.size(); i < capacity; i++) {
 			highScores.add(new Score("unknown", 0));
-			//highScores.add(2);
 		}
 		
-		//json.writeValue("highScores", highScores);
 		json.writeValue("highScores", highScores, ArrayList.class, Score.class);
 	}
 
@@ -68,7 +66,6 @@ public class HighScores implements Serializable {
 		
 		for (int i = highScores.size(); i < capacity; i++) {
 			highScores.add(new Score("unknown", 0));
-			//highScores.add(2);
 		}
 	}
 
