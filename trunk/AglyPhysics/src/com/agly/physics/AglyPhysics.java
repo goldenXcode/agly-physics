@@ -10,7 +10,7 @@ public class AglyPhysics extends Game {
     public static final String LOG = AglyPhysics.class.getSimpleName();
 
     // whether we are in development mode
-    public static final boolean DEV_MODE = true;
+    public static final boolean DEV_MODE = false;
 
 	private HighScoresManager highScoresManager;
 	

@@ -15,18 +15,18 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Magnet extends Actor {
-	
+
 	// constant useful for logging
 	public static final String LOG = Magnet.class.getSimpleName();
-	
+
 	public enum State {
 		ACTIVE, PASSIVE
 	}
 
 	public State state = State.PASSIVE;
-	
+
 	private Ball ball;
-	
+
 	private Color color;
 	/**
 	 * The Object's size
@@ -45,38 +45,27 @@ public class Magnet extends Actor {
 		this.setWidth(Magnet.SIZE * 2);
 		this.setHeight(Magnet.SIZE * 2);
 
-		if (state == State.ACTIVE) 
+		if (state == State.ACTIVE)
 			this.color = Color.BLUE;
 		else
 			this.color = Color.GRAY;
-		
+
 		this.addListener(new ClickListener() {
 
 			@Override
-				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
-	
-					if (state == State.ACTIVE) {
-						state = State.PASSIVE;
-						color = Color.GRAY;
-						Gdx.app.log(
-								LOG, "The magnet setted to passive");
-						
-					}
-					else {
-						state = State.ACTIVE;
-						color = Color.BLUE;
-						Gdx.app.log(
-								LOG, "The magnet setted to active");
-						
-					}
-				}
-	
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					return true;
-				}
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				// flipping the state
+				Magnet.this.flip();
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				Magnet.this.flip();
+				return true;
+			}
 		});
 
 	}
@@ -103,10 +92,11 @@ public class Magnet extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 
 		RenderHelper.shapeRenderer.begin(ShapeType.FilledCircle);
-		
+
 		RenderHelper.shapeRenderer.identity();
 		RenderHelper.shapeRenderer.setColor(color);
-		RenderHelper.shapeRenderer.filledCircle(getX() + Magnet.SIZE, getY() + Magnet.SIZE, Magnet.SIZE);
+		RenderHelper.shapeRenderer.filledCircle(getX() + Magnet.SIZE, getY()
+				+ Magnet.SIZE, Magnet.SIZE);
 
 		RenderHelper.shapeRenderer.end();
 
@@ -120,8 +110,22 @@ public class Magnet extends Actor {
 	public void setPosition(float x, float y) {
 		x = Math.round(x);
 		y = Math.round(y);
-		super.setPosition(x - SIZE , y - SIZE);
+		super.setPosition(x - SIZE, y - SIZE);
 		position.set(x, y);
+	}
+
+	private void flip() {
+		if (state == State.ACTIVE) {
+			state = State.PASSIVE;
+			color = Color.GRAY;
+			Gdx.app.log(LOG, "The magnet setted to passive");
+
+		} else {
+			state = State.ACTIVE;
+			color = Color.BLUE;
+			Gdx.app.log(LOG, "The magnet setted to active");
+
+		}
 	}
 
 }

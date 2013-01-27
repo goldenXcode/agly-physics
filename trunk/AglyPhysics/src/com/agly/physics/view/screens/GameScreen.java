@@ -25,7 +25,6 @@ public class GameScreen extends AbstractScreen {
 		super.show();
 
 		controller = new DeskController(this);
-
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class GameScreen extends AbstractScreen {
 		getBatch().end();
 		
 		
-		if (seconds > 5) {
+		if (seconds > 10) {
 			this.gameOver();
 		}
 	}
@@ -67,10 +66,5 @@ public class GameScreen extends AbstractScreen {
 	public Stage getStage() {
 		return this.stage;
 	}
-
-		
-		
-	
-	
 
 }
